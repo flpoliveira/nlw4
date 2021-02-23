@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import ExperienceBar from "./components/ExperienceBar";
+
+import "./styles/global.css";
 
 function App() {
+
+  const [level, setLevel] = React.useState(1);
+  const [experience, setExperience] = React.useState(0);
+
+  React.useEffect(() => {
+    if (experience >= level * 600) {
+      setLevel(level + 1);
+      setExperience(0);
+    }
+  }, [experience, level]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <ExperienceBar 
+        maximun={600 * level}
+        experience={experience}
+        minimun={0}
+      />
+      <button 
+        onClick={() => {
+          setExperience(experience + 150);
+        }}
+        style={{
+          marginTop: "3rem",
+        }}
+      >
+        Aumenta ai + 150xp
+      </button>
+      <span>Level {level}</span>
     </div>
   );
 }
